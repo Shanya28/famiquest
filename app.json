@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "FamiQuest",
+    "slug": "famiquest",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "famiquest",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "backgroundColor": "#6C5CE7",
+      "resizeMode": "contain"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.shanya.famiquest",
+      "infoPlist": {
+        "NSCameraUsageDescription": "FamiQuest utilise l'appareil photo pour que l'enfant envoie une preuve de tâche accomplie."
+      }
+    },
+    "android": {
+      "package": "com.shanya.famiquest",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.POST_NOTIFICATIONS",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#6C5CE7"
+      }
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#6C5CE7"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "FamiQuest utilise l'appareil photo pour prendre une preuve de mission accomplie."
+        }
+      ],
+      "expo-asset"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "4aec0793-8996-46bd-9187-098d1db6e27e"
+      }
+    },
+    "owner": "shanyaa"
+  }
+}
