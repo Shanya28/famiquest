@@ -187,6 +187,19 @@ export function AppProvider({ children: kids }) {
     return { xp: task.xp, coins: task.coins, screenMin: task.screenMin, badges, levelUp };
   };
 
+  /* ---------- Push direct au parent (sans serveur) ---------- */
+  const notifyParent = async (title, body) => {
+    try {
+      const tokens = family?.pushTokens || [];
+      if (tokens.length === 0) return;
+      await fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(tokens.map((to) => ({ to, sound: 'default', title, body }))),
+      });
+    } catch (e) { /* push indisponible : sans consequence */ }
+  };
+
   /* ---------- Cycle de vie d'une tâche ---------- */
   const completeTask = async (task) => {
     await updateDoc(doc(db, 'families', familyId, 'tasks', task.id),
@@ -203,6 +216,9 @@ export function AppProvider({ children: kids }) {
     await updateDoc(doc(db, 'families', familyId, 'tasks', task.id), {
       status: 'pending', proofUrl: imageUri, day: todayKey(), submittedAt: serverTimestamp(),
     });
+    const child = childrenList.find((c) => c.id === task.childId);
+    notifyParent('📸 Nouvelle preuve à valider',
+      `${child?.name || 'Votre enfant'} a terminé « ${task.title} ». Ouvrez FamiQuest pour valider !`);
   };
 
   const approveTask = async (task) => {
@@ -234,6 +250,8 @@ export function AppProvider({ children: kids }) {
       childId: child.id, rewardTitle: reward.title, rewardIcon: reward.icon,
       cost: reward.cost, status: 'pending', createdAt: serverTimestamp(),
     });
+    notifyParent('🛍️ Achat en boutique',
+      `${child.name} a acheté « ${reward.title} » (${reward.cost} 🪙). Confirmez la remise !`);
     return true;
   };
 
