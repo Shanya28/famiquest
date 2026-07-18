@@ -3,6 +3,7 @@ import {
   View, Text, ScrollView, StyleSheet, TouchableOpacity, Alert, ActivityIndicator,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { useApp } from '../../context/AppContext';
 import { Card, Pill, ProgressBar, ScreenGauge, Button } from '../../components/UI';
 import Celebration from '../../components/Celebration';
@@ -36,12 +37,18 @@ export default function MissionsScreen() {
       return;
     }
     const result = await ImagePicker.launchCameraAsync({
-      quality: 0.2, allowsEditing: true, aspect: [4, 3], base64: true,
+      quality: 0.7, allowsEditing: true, aspect: [4, 3],
     });
-    if (result.canceled || !result.assets?.[0]?.base64) return;
+    if (result.canceled || !result.assets?.[0]?.uri) return;
     try {
       setBusy(task.id);
-      await submitProof(task, `data:image/jpeg;base64,${result.assets[0].base64}`);
+      // Reduction de la photo (largeur 700px, compressee) pour rester sous 1 Mo
+      const small = await ImageManipulator.manipulateAsync(
+        result.assets[0].uri,
+        [{ resize: { width: 700 } }],
+        { compress: 0.4, format: ImageManipulator.SaveFormat.JPEG, base64: true }
+      );
+      await submitProof(task, `data:image/jpeg;base64,${small.base64}`);
       Alert.alert('📤 Envoyé !', 'Tes parents vont vérifier ta mission 👀');
     } catch (e) {
       Alert.alert('Erreur', "L'envoi de la photo a échoué. Vérifie ta connexion et réessaie.");
@@ -124,7 +131,11 @@ function TaskRow({ task, busy, onComplete }) {
       task.status === 'done' && { opacity: 0.6 },
       task.status === 'late' && { borderWidth: 2, borderColor: C.coralSoft },
     ]}>
-      <View style={styles.taskIcon}><Text style={{ fontSize: 24 }}>{task.icon}</Text></View>
+      <View style={[styles.taskIcon, task.status === 'done' && { backgroundColor: C.mint }]}>
+        {task.status === 'done'
+          ? <Text style={{ fontSize: 22, color: '#fff', fontWeight: '900' }}>{'\u2713'}</Text>
+          : <Text style={{ fontSize: 24 }}>{task.icon}</Text>}
+      </View>
       <View style={{ flex: 1 }}>
         <Text style={[styles.taskTitle, task.status === 'done' && { textDecorationLine: 'line-through' }]}>
           {task.title}

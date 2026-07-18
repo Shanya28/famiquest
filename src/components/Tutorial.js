@@ -11,19 +11,27 @@ import { C } from '../theme';
  * - Peut etre rejoue depuis les Reglages (evenement 'show_tutorial')
  */
 const SLIDES = {
+  intro: [
+    { icon: '🏡', title: "C'est quoi FamiQuest ?", text: "Une appli qui transforme les tâches quotidiennes de vos enfants (devoirs, rangement, lecture…) en jeu : chaque mission accomplie rapporte des points, des pièces et des minutes de jeu vidéo méritées." },
+    { icon: '👨‍👩‍👧', title: 'Un seul compte pour toute la famille', text: "Sur cet écran, le parent crée LE compte familial avec son email et un mot de passe. Ensuite, chaque membre choisira son profil : Espace Parent pour vous, un profil par enfant." },
+    { icon: '📱', title: 'Sur plusieurs téléphones', text: "Installez l'app sur le téléphone de chaque enfant et connectez-vous partout avec LE MÊME email et mot de passe. Le parent entre dans l'Espace Parent, l'enfant choisit son profil. Tout se synchronise tout seul." },
+    { icon: '🔒', title: 'Un conseil avant de commencer', text: "Une fois dans l'app, allez dans Réglages pour activer un code PIN : il empêche les enfants d'entrer dans l'Espace Parent. Créez maintenant votre compte ! 🚀" },
+  ],
   parent: [
-    { icon: '👋', title: 'Bienvenue sur FamiQuest !', text: "Transformez les responsabilités quotidiennes de vos enfants en jeu motivant. Ce petit guide vous montre l'essentiel en 1 minute." },
-    { icon: '📋', title: 'Créez les missions', text: "Dans l'onglet Tâches : choisissez l'enfant, les jours de la semaine, l'heure du rappel, les récompenses (XP, pièces, minutes de jeu) et exigez une preuve photo si besoin. L'enfant reçoit une notification à l'heure dite." },
-    { icon: '✅', title: 'Validez leurs preuves', text: "Quand un enfant termine une mission avec photo, elle apparaît dans l'onglet Valider. Approuvez pour envoyer les récompenses, ou refusez pour qu'il recommence. Les achats en boutique se confirment ici aussi." },
-    { icon: '🎮', title: 'Le jeu se mérite', text: "Chaque mission accomplie fait gagner des minutes de jeu vidéo, visibles dans un compteur. Vous gardez le contrôle : ajoutez ou retirez du temps à tout moment dans l'onglet Valider." },
-    { icon: '📊', title: 'Suivez leurs progrès', text: "Le Tableau montre les missions du jour, les retards et un graphique des 7 derniers jours pour chaque enfant. Les séries 🔥 récompensent la régularité." },
-    { icon: '⚙️', title: 'Personnalisez tout', text: "Dans Réglages : activez un code PIN pour verrouiller votre espace, gérez la boutique de récompenses et les profils. Bonne aventure en famille ! 🚀" },
+    { icon: '👋', title: 'Bienvenue dans votre espace !', text: "Voici comment tout fonctionne, en 6 étapes concrètes. Vous pourrez revoir ce guide à tout moment dans Réglages → Revoir le tutoriel." },
+    { icon: '👶', title: '1. Ajoutez vos enfants', text: "Appuyez sur « Changer ⇄ » en haut à droite : vous arrivez sur l'écran des profils. Appuyez sur « + Ajouter un enfant », choisissez son prénom et son avatar. Recommencez pour chaque enfant." },
+    { icon: '📋', title: '2. Créez une mission', text: "Onglet « Tâches » en bas → bouton « + Nouvelle tâche ». Choisissez : l'enfant, les jours (aucun coché = tous les jours), l'heure du rappel, les récompenses. Activez « preuve photo » si vous voulez vérifier avec une photo." },
+    { icon: '🔔', title: "3. Le téléphone de l'enfant sonne", text: "À l'heure choisie, une notification rappelle sa mission à l'enfant (acceptez les notifications à la première ouverture !). Non faite 30 minutes après l'heure, la mission passe « En retard » en rouge." },
+    { icon: '✅', title: '4. Validez son travail', text: "Onglet « Valider » : les photos envoyées par vos enfants y apparaissent avec un badge rouge. « Valider » envoie les récompenses, « Refuser » remet la mission à faire. Les achats en boutique se confirment ici aussi." },
+    { icon: '🎮', title: '5. Le jeu vidéo se mérite', text: "Chaque mission validée ajoute des minutes de jeu au compteur de l'enfant. Dans l'onglet Valider, les boutons − et + vous permettent d'ajuster ce temps à tout moment. Vous gardez le dernier mot." },
+    { icon: '📊', title: '6. Suivez et personnalisez', text: "L'onglet « Tableau » montre les progrès et le graphique de la semaine. Dans « Réglages » : code PIN, récompenses de la boutique, profils. Bonne aventure en famille ! 🚀" },
   ],
   child: [
-    { icon: '🎉', title: 'Bienvenue, héros !', text: "Ici, tes tâches deviennent des missions ! Ce petit guide t'explique tout en 30 secondes." },
-    { icon: '🏠', title: 'Tes missions du jour', text: "Elles t'attendent sur l'écran d'accueil avec leur heure. Quand tu en termines une, appuie sur « Fait ! ». Parfois il faudra envoyer une photo en preuve 📸 — tes parents vérifient !" },
-    { icon: '⭐', title: 'Gagne des récompenses', text: "Chaque mission te rapporte des XP pour monter de niveau, des pièces 🪙 et des minutes de jeu vidéo 🎮. Fais des missions tous les jours pour garder ta série 🔥 !" },
-    { icon: '🛍️', title: 'Dépense tes pièces', text: "Dans la Boutique, achète des vraies récompenses : dessert préféré, film du soir, sortie au parc… Tes parents te les remettent. Et dans Trophées, découvre tes badges à débloquer 🏅. À toi de jouer !" },
+    { icon: '🎉', title: 'Bienvenue, héros !', text: "Ici, tes tâches deviennent des missions de jeu ! Voici comment jouer, en 4 étapes rapides." },
+    { icon: '🏠', title: 'Tes missions du jour', text: "Elles sont sur ton écran d'accueil, chacune avec son heure. Ton téléphone sonnera pour te les rappeler ! Quand tu as fini, appuie sur le bouton vert « Fait ! » — la mission devient verte ✓." },
+    { icon: '📸', title: 'La preuve photo', text: "Si le bouton dit « 📸 Fait ! », prends en photo ton travail (ton lit fait, ta chambre rangée…). Papa ou maman regarde ta photo et t'envoie tes récompenses. Pas de triche ! 😄" },
+    { icon: '⭐', title: 'Gagne des trésors', text: "Chaque mission te donne : des XP pour monter de niveau, des pièces 🪙 et des minutes de jeu vidéo 🎮. Fais au moins une mission chaque jour pour faire grandir ta série 🔥 !" },
+    { icon: '🛍', title: 'Dépense tes pièces', text: "Dans la Boutique, achète de vraies récompenses (dessert, film, sortie…) que tes parents te remettent. Et regarde tes badges dans Trophées 🏅. À toi de jouer !" },
   ],
 };
 

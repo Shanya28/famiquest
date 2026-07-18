@@ -9,7 +9,7 @@ import {
   createUserWithEmailAndPassword, signOut,
 } from 'firebase/auth';
 import { auth, db, storage } from '../config/firebase';
-import { scheduleReminders, cancelReminders, registerForPushNotifications } from '../services/notifications';
+import { syncAllReminders, registerForPushNotifications } from '../services/notifications';
 import { computeBadges, todayKey, yesterdayKey, DEFAULT_REWARDS } from '../utils/gamification';
 
 const AppContext = createContext(null);
@@ -117,7 +117,6 @@ export function AppProvider({ children: kids }) {
   const removeChild = async (childId) => {
     // Supprime les tâches de l'enfant (et leurs rappels locaux)
     for (const t of tasks.filter((x) => x.childId === childId)) {
-      await cancelReminders(t.notificationIds || t.notificationId);
       await deleteDoc(doc(db, 'families', familyId, 'tasks', t.id));
     }
     return deleteDoc(doc(db, 'families', familyId, 'children', childId));
@@ -128,23 +127,19 @@ export function AppProvider({ children: kids }) {
       { screenMinutes: increment(delta) });
 
   /* ---------- Tâches ---------- */
-  const addTask = async (task) => {
-    let notificationIds = [];
-    try {
-      notificationIds = await scheduleReminders(task);
-    } catch (e) {
-      // Rappels indisponibles (web, permissions refusees...) : la tache se cree sans rappel
-    }
-    return addDoc(collection(db, 'families', familyId, 'tasks'), {
-      ...task, status: 'todo', day: todayKey(), notificationIds,
+  const addTask = (task) =>
+    addDoc(collection(db, 'families', familyId, 'tasks'), {
+      ...task, status: 'todo', day: todayKey(),
       createdAt: serverTimestamp(),
     });
-  };
 
-  const deleteTask = async (task) => {
-    await cancelReminders(task.notificationIds || task.notificationId);
-    return deleteDoc(doc(db, 'families', familyId, 'tasks', task.id));
-  };
+  const deleteTask = (task) =>
+    deleteDoc(doc(db, 'families', familyId, 'tasks', task.id));
+
+  /* ---------- Rappels locaux : resynchronises sur CHAQUE appareil connecte ---------- */
+  useEffect(() => {
+    syncAllReminders(tasks);
+  }, [JSON.stringify(tasks.map((t) => ({ i: t.id, h: t.time, d: t.days, n: t.title })))]);
 
   /* ---------- Récompenses, série 🔥, badges, historique ---------- */
   const grantRewards = async (task) => {

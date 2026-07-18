@@ -146,7 +146,11 @@ export default function TasksScreen() {
           <Text style={styles.section}>{child.avatar} Planning de {child.name}</Text>
           {tasks.filter((t) => t.childId === child.id).map((t) => (
             <Card key={t.id} style={styles.taskRow}>
-              <Text style={{ fontSize: 20 }}>{t.icon}</Text>
+              {t.status === 'done'
+                ? <View style={{ width: 28, height: 28, borderRadius: 14, backgroundColor: C.mint, alignItems: 'center', justifyContent: 'center' }}>
+                    <Text style={{ color: '#fff', fontWeight: '900' }}>{'\u2713'}</Text>
+                  </View>
+                : <Text style={{ fontSize: 20 }}>{t.icon}</Text>}
               <View style={{ flex: 1 }}>
                 <Text style={styles.taskTitle}>{t.title}</Text>
                 <Text style={styles.taskMeta}>

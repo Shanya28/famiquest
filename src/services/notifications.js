@@ -66,7 +66,7 @@ export async function scheduleReminders(task) {
   if (!task.days || task.days.length === 0 || task.days.length === 7) {
     const id = await Notifications.scheduleNotificationAsync({
       content,
-      trigger: { type: 'calendar', hour, minute, repeats: true },
+      trigger: { type: 'daily', hour, minute },
     });
     return [id];
   }
@@ -76,7 +76,7 @@ export async function scheduleReminders(task) {
   for (const jsDay of task.days) {
     const id = await Notifications.scheduleNotificationAsync({
       content,
-      trigger: { type: 'calendar', weekday: jsDay + 1, hour, minute, repeats: true },
+      trigger: { type: 'weekly', weekday: jsDay + 1, hour, minute },
     });
     ids.push(id);
   }
@@ -90,4 +90,25 @@ export async function cancelReminders(notificationIds) {
   for (const id of ids) {
     try { await Notifications.cancelScheduledNotificationAsync(id); } catch (e) { /* déjà annulée */ }
   }
+}
+
+
+/**
+ * Synchronise TOUS les rappels sur CET appareil a partir de la liste des taches.
+ * Chaque telephone connecte (parent et enfants) a ainsi ses rappels a jour,
+ * quel que soit l'appareil qui a cree la tache.
+ */
+export async function syncAllReminders(tasks) {
+  if (Platform.OS === 'web') return;
+  try {
+    const perm = await Notifications.getPermissionsAsync();
+    if (perm.status !== 'granted') {
+      const req = await Notifications.requestPermissionsAsync();
+      if (req.status !== 'granted') return;
+    }
+    await Notifications.cancelAllScheduledNotificationsAsync();
+    for (const t of tasks) {
+      try { await scheduleReminders(t); } catch (e) { /* tache invalide : ignoree */ }
+    }
+  } catch (e) { /* rappels indisponibles : sans consequence */ }
 }

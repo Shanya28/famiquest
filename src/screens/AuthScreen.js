@@ -6,6 +6,7 @@ import {
 import { useApp } from '../context/AppContext';
 import { Button } from '../components/UI';
 import { C } from '../theme';
+import Tutorial from '../components/Tutorial';
 
 export default function AuthScreen() {
   const { login, signup } = useApp();
@@ -80,6 +81,7 @@ export default function AuthScreen() {
           </Text>
         </TouchableOpacity>
       </View>
+      <Tutorial mode="intro" />
     </KeyboardAvoidingView>
   );
 }
