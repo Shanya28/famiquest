@@ -15,23 +15,17 @@ export default function ValidationScreen() {
   const pendingBuys = redemptions.filter((r) => r.status === 'pending');
 
   const askReject = (task) => {
-    // Alert.prompt n'existe que sur iOS : sur Android on refuse avec une raison generique
-    if (Alert.prompt) {
-      Alert.prompt(
-        'Refuser la preuve',
-        "Explique a l'enfant pourquoi (optionnel) :",
-        [
-          { text: 'Annuler', style: 'cancel' },
-          { text: 'Refuser', style: 'destructive', onPress: (reason) => rejectTask(task, reason || '') },
-        ],
-        'plain-text'
-      );
-    } else {
-      Alert.alert('Refuser la preuve ?', "La mission repassera 'a refaire' cote enfant.", [
+    // Menu de raisons : fonctionne sur Android ET iPhone
+    Alert.alert(
+      'Pourquoi refuser ?',
+      "La mission repassera « à refaire » chez l'enfant, avec la raison choisie.",
+      [
+        { text: '\uD83D\uDCF7 Photo floue / illisible', onPress: () => rejectTask(task, 'Photo floue ou illisible') },
+        { text: '\u2717 Tâche non terminée', onPress: () => rejectTask(task, "La tâche n'est pas terminée") },
+        { text: 'Refuser sans raison', onPress: () => rejectTask(task, '') },
         { text: 'Annuler', style: 'cancel' },
-        { text: 'Refuser', style: 'destructive', onPress: () => rejectTask(task, '') },
-      ]);
-    }
+      ]
+    );
   };
 
   const approve = async (task) => {
