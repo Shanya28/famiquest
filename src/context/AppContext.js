@@ -222,9 +222,9 @@ export function AppProvider({ children: kids }) {
     return grantRewards(task);
   };
 
-  const rejectTask = (task) =>
+  const rejectTask = (task, reason = '') =>
     updateDoc(doc(db, 'families', familyId, 'tasks', task.id),
-      { status: 'todo', proofUrl: null });
+      { status: 'rejected', proofUrl: null, rejectReason: reason });
 
   const spendScreen = (childId, minutes = 15) => adjustScreen(childId, -minutes);
 

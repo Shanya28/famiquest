@@ -72,6 +72,7 @@ export const isScheduledToday = (task) =>
 
 /** Statut affiché : une tâche "todo" dont l'heure est dépassée de 30 min devient "late" */
 export function effectiveStatus(task) {
+  if (task.status === 'rejected') return 'rejected';
   if (task.status !== 'todo') return task.status;
   const [h, m] = (task.time || '00:00').split(':').map(Number);
   const now = new Date();

@@ -14,6 +14,26 @@ export default function ValidationScreen() {
   const pendingTasks = tasks.filter((t) => t.status === 'pending');
   const pendingBuys = redemptions.filter((r) => r.status === 'pending');
 
+  const askReject = (task) => {
+    // Alert.prompt n'existe que sur iOS : sur Android on refuse avec une raison generique
+    if (Alert.prompt) {
+      Alert.prompt(
+        'Refuser la preuve',
+        "Explique a l'enfant pourquoi (optionnel) :",
+        [
+          { text: 'Annuler', style: 'cancel' },
+          { text: 'Refuser', style: 'destructive', onPress: (reason) => rejectTask(task, reason || '') },
+        ],
+        'plain-text'
+      );
+    } else {
+      Alert.alert('Refuser la preuve ?', "La mission repassera 'a refaire' cote enfant.", [
+        { text: 'Annuler', style: 'cancel' },
+        { text: 'Refuser', style: 'destructive', onPress: () => rejectTask(task, '') },
+      ]);
+    }
+  };
+
   const approve = async (task) => {
     const result = await approveTask(task);
     const child = children.find((c) => c.id === task.childId);
@@ -53,7 +73,7 @@ export default function ValidationScreen() {
             )}
             <View style={{ flexDirection: 'row', gap: 8 }}>
               <Button title={`✓ Valider (+${t.xp} XP)`} bg={C.mint} style={{ flex: 1 }} onPress={() => approve(t)} />
-              <Button title="✕ Refuser" bg={C.coralSoft} color={C.coralText} style={{ flex: 1 }} onPress={() => rejectTask(t)} />
+              <Button title="✕ Refuser" bg={C.coralSoft} color={C.coralText} style={{ flex: 1 }} onPress={() => askReject(t)} />
             </View>
           </Card>
         );

@@ -154,9 +154,10 @@ function TaskRow({ task, busy, onComplete }) {
     todo: { label: 'À faire', bg: C.skySoft, color: C.skyText },
     late: { label: 'En retard', bg: C.coralSoft, color: C.coralText },
     pending: { label: 'En attente 👀', bg: C.sunSoft, color: C.sunText },
+    rejected: { label: '❌ À refaire', bg: C.coralSoft, color: C.coralText },
     done: { label: 'Terminé ✓', bg: C.mintSoft, color: C.mintText },
   }[task.status] || { label: task.status, bg: C.bg, color: C.inkSoft };
-  const actionable = task.status === 'todo' || task.status === 'late';
+  const actionable = task.status === 'todo' || task.status === 'late' || task.status === 'rejected';
 
   return (
     <Card style={[
@@ -181,6 +182,13 @@ function TaskRow({ task, busy, onComplete }) {
           <Pill bg={C.sunSoft} color={C.sunText}>🎮 +{task.screenMin}m</Pill>
         </View>
       </View>
+      {task.status === 'rejected' && (
+        <View style={styles.rejectBanner}>
+          <Text style={styles.rejectText}>
+            {'\u274C'} Ta preuve n'a pas été validée. {task.rejectReason ? '\u00AB ' + task.rejectReason + ' \u00BB. ' : ''}Refais ta mission !
+          </Text>
+        </View>
+      )}
       {busy ? (
         <ActivityIndicator color={C.violet} />
       ) : actionable ? (
@@ -220,4 +228,6 @@ const styles = StyleSheet.create({
   taskTitle: { fontWeight: '700', fontSize: 14, color: C.ink },
   pillRow: { flexDirection: 'row', gap: 6, marginTop: 5, flexWrap: 'wrap' },
   doneBtn: { backgroundColor: C.mint, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12 },
+  rejectBanner: { position: 'absolute', bottom: -6, left: 58, right: 12, backgroundColor: 'transparent' },
+  rejectText: { color: C.coralText, fontSize: 11, fontWeight: '700' },
 });
