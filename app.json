@@ -9,7 +9,8 @@
     "newArchEnabled": true,
     "splash": {
       "backgroundColor": "#6C5CE7",
-      "resizeMode": "contain"
+      "resizeMode": "contain",
+      "image": "./assets/icon.png"
     },
     "ios": {
       "supportsTablet": false,
@@ -26,6 +27,7 @@
         "android.permission.RECORD_AUDIO"
       ],
       "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#6C5CE7"
       }
     },
@@ -49,6 +51,7 @@
         "projectId": "4aec0793-8996-46bd-9187-098d1db6e27e"
       }
     },
-    "owner": "shanyaa"
+    "owner": "shanyaa",
+    "icon": "./assets/icon.png"
   }
 }
