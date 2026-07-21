@@ -161,44 +161,48 @@ function TaskRow({ task, busy, onComplete }) {
 
   return (
     <Card style={[
-      styles.taskRow,
+      { flexDirection: 'column', gap: 0 },
       task.status === 'done' && { opacity: 0.6 },
+      task.status === 'rejected' && { borderWidth: 2, borderColor: C.coral },
       task.status === 'late' && { borderWidth: 2, borderColor: C.coralSoft },
     ]}>
-      <View style={[styles.taskIcon, task.status === 'done' && { backgroundColor: C.mint }]}>
-        {task.status === 'done'
-          ? <Text style={{ fontSize: 22, color: '#fff', fontWeight: '900' }}>{'\u2713'}</Text>
-          : <Text style={{ fontSize: 24 }}>{task.icon}</Text>}
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text style={[styles.taskTitle, task.status === 'done' && { textDecorationLine: 'line-through' }]}>
-          {task.title}
-        </Text>
-        <View style={styles.pillRow}>
-          <Pill bg={task.status === 'late' ? C.coralSoft : C.bg} color={task.status === 'late' ? C.coralText : C.inkSoft}>
-            🕐 {task.time}
-          </Pill>
-          <Pill bg={C.violetSoft} color={C.violetDark}>+{task.xp} XP</Pill>
-          <Pill bg={C.sunSoft} color={C.sunText}>🎮 +{task.screenMin}m</Pill>
+      <View style={styles.taskMain}>
+        <View style={[styles.taskIcon, task.status === 'done' && { backgroundColor: C.mint }]}>
+          {task.status === 'done'
+            ? <Text style={{ fontSize: 22, color: '#fff', fontWeight: '900' }}>{'\u2713'}</Text>
+            : <Text style={{ fontSize: 24 }}>{task.icon}</Text>}
         </View>
+        <View style={{ flex: 1 }}>
+          <Text style={[styles.taskTitle, task.status === 'done' && { textDecorationLine: 'line-through' }]}>
+            {task.title}
+          </Text>
+          <View style={styles.pillRow}>
+            <Pill bg={task.status === 'late' ? C.coralSoft : C.bg} color={task.status === 'late' ? C.coralText : C.inkSoft}>
+              🕐 {task.time}
+            </Pill>
+            <Pill bg={C.violetSoft} color={C.violetDark}>+{task.xp} XP</Pill>
+            <Pill bg={C.sunSoft} color={C.sunText}>🎮 +{task.screenMin}m</Pill>
+          </View>
+        </View>
+        {busy ? (
+          <ActivityIndicator color={C.violet} />
+        ) : actionable ? (
+          <TouchableOpacity style={styles.doneBtn} onPress={() => onComplete(task)}>
+            <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>
+              {task.proofRequired ? '📸 Fait !' : 'Fait !'}
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <Pill bg={cfg.bg} color={cfg.color}>{cfg.label}</Pill>
+        )}
       </View>
+
       {task.status === 'rejected' && (
-        <View style={styles.rejectBanner}>
+        <View style={styles.rejectBox}>
           <Text style={styles.rejectText}>
-            {'\u274C'} Ta preuve n'a pas été validée. {task.rejectReason ? '\u00AB ' + task.rejectReason + ' \u00BB. ' : ''}Refais ta mission !
+            {'\u274C'} Ta preuve n'a pas été validée{task.rejectReason ? ' : ' + task.rejectReason : ''}. Refais ta mission !
           </Text>
         </View>
-      )}
-      {busy ? (
-        <ActivityIndicator color={C.violet} />
-      ) : actionable ? (
-        <TouchableOpacity style={styles.doneBtn} onPress={() => onComplete(task)}>
-          <Text style={{ color: '#fff', fontWeight: '800', fontSize: 12 }}>
-            {task.proofRequired ? '📸 Fait !' : 'Fait !'}
-          </Text>
-        </TouchableOpacity>
-      ) : (
-        <Pill bg={cfg.bg} color={cfg.color}>{cfg.label}</Pill>
       )}
     </Card>
   );
@@ -228,6 +232,7 @@ const styles = StyleSheet.create({
   taskTitle: { fontWeight: '700', fontSize: 14, color: C.ink },
   pillRow: { flexDirection: 'row', gap: 6, marginTop: 5, flexWrap: 'wrap' },
   doneBtn: { backgroundColor: C.mint, borderRadius: 12, paddingVertical: 10, paddingHorizontal: 12 },
-  rejectBanner: { position: 'absolute', bottom: -6, left: 58, right: 12, backgroundColor: 'transparent' },
-  rejectText: { color: C.coralText, fontSize: 11, fontWeight: '700' },
+  taskMain: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  rejectBox: { backgroundColor: C.coralSoft, borderRadius: 12, paddingVertical: 8, paddingHorizontal: 12, marginTop: 10 },
+  rejectText: { color: C.coralText, fontSize: 12, fontWeight: '700', lineHeight: 17 },
 });
