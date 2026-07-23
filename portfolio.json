@@ -1,0 +1,34 @@
+{
+  "titre": "FamiQuest",
+  "statut": "live",
+  "etiquette": "Installée chez de vraies familles",
+  "meta": "Projet personnel · conçue, développée et livrée seule · application mobile",
+  "resume": "Une application qui règle une bagarre que connaissent toutes les familles : celle des écrans. Les tâches de la maison deviennent des missions, et le temps de jeu ne se réclame plus — <em>il se gagne</em>.",
+  "points": [
+    "<b>Un produit complet, pas une maquette.</b> De l'idée à l'APK installé sur le téléphone d'un premier groupe de familles pilotes, avec un guide de bienvenue qui prend l'utilisateur par la main dès la première ouverture.",
+    "<b>Une économie de motivation conçue de zéro.</b> Points, pièces, badges et minutes de jeu : il a fallu équilibrer les récompenses pour que l'enfant reste motivé sans que le système devienne facile à contourner.",
+    "<b>Une boucle de confiance entre parent et enfant.</b> Chaque mission se termine par une preuve photo ; le parent valide d'un geste ou refuse en expliquant pourquoi, et l'enfant est prévenu dans la seconde.",
+    "<b>Un seul compte pour toute la famille, synchronisé partout.</b> Le parent suit depuis son téléphone, l'enfant coche ses missions depuis sa tablette, et l'état reste cohérent des deux côtés. C'est la partie technique dont je suis la plus fière.",
+    "<b>Deux interfaces dans une seule application.</b> Un espace enfant assez simple pour un enfant de sept ans, un espace parent protégé par code, avec une boutique de récompenses que le parent définit lui-même."
+  ],
+  "stack": [
+    "Application mobile",
+    "Synchronisation multi-appareils",
+    "Compte familial partagé",
+    "Distribution APK"
+  ],
+  "visuel": "famiquest",
+  "demo": "",
+  "ordre": 0,
+  "titre_en": "FamiQuest",
+  "etiquette_en": "Installed by real families",
+  "meta_en": "Personal project · designed, built and shipped solo · mobile app",
+  "resume_en": "An app that settles a fight every family knows: the one about screens. Household chores become missions, and game time is no longer demanded — <em>it is earned</em>.",
+  "points_en": [
+    "<b>A finished product, not a mockup.</b> From the idea to an APK installed on the phones of a first group of pilot families, with a welcome guide that walks the user through from the very first launch.",
+    "<b>A motivation economy designed from scratch.</b> Points, coins, badges and game minutes: the rewards had to be balanced so the child stays motivated without the system becoming easy to game.",
+    "<b>A loop of trust between parent and child.</b> Every mission ends with a photo proof; the parent approves with one tap or declines with a reason, and the child is notified within the second.",
+    "<b>One account for the whole family, synced everywhere.</b> The parent follows from their phone, the child ticks missions off on their tablet, and the state stays consistent on both sides.",
+    "<b>Two interfaces inside one app.</b> A child space simple enough for a seven-year-old, a parent space protected by a code, with a reward shop the parent defines."
+  ]
+}
