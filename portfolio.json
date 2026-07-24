@@ -30,5 +30,9 @@
     "<b>A loop of trust between parent and child.</b> Every mission ends with a photo proof; the parent approves with one tap or declines with a reason, and the child is notified within the second.",
     "<b>One account for the whole family, synced everywhere.</b> The parent follows from their phone, the child ticks missions off on their tablet, and the state stays consistent on both sides.",
     "<b>Two interfaces inside one app.</b> A child space simple enough for a seven-year-old, a parent space protected by a code, with a reward shop the parent defines."
+  ],
+  "ecrans": [
+    "captures-famiquest/famiquest-enfant.jpg",
+    "captures-famiquest/famiquest-parent.jpg"
   ]
 }
